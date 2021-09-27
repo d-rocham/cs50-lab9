@@ -1,0 +1,132 @@
+{% extends "layout.html" %} {% block body %}
+
+<div class="jumbotron">
+    <h1>Birthdays</h1>
+</div>
+<div class="modal">
+    <div class="modal__container">
+        <h3 class="modal__title">Edit entry</h3>
+        <form action="" class="modal__form" id="entry__edition">
+            <label for="">
+                New name:
+                <input type="text" name="name" id="modal__form--newName" autocomplete="off">
+            </label><br>
+            <label for="">
+                New date:
+                <input type="date" name="date" id="modal__form--newDate">
+            </label>
+        </form>
+        <div class="modal__container--buttons">
+            <input type="submit" value="Submit changes" form="entry__edition">
+            <button class="modal__closeButton">Close window</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="section">
+        <h2>Add a Birthday</h2>
+        <form id="entry__creation">
+            <fieldset>
+                <legend>Use the form below to add a new birthday!</legend>
+                <label for="name">
+                    What's your name?
+                    <input
+                        type="text"
+                        name="name"
+                        id="entry__creation--name"
+                        autofocus
+                        autocomplete="off"
+                        required
+                    />
+                </label>
+                <label for="date">
+                    When were you born?
+                    <input type="date" name="date" id="entry__creation--date" required />
+                </label>
+                <label for="submit">
+                    <input type="submit" value="Send" id="entry__creation--submit"/>
+                </label>
+            </fieldset>
+        </form>
+    </div>
+    <div class="section">
+        <div class="section__header">
+            <h2 class="section--title">All Birthdays</h2>
+        </div>
+        
+
+        <table class="table table--sortable">
+            <thead>
+                <tr>
+                    <th id="id">
+                        ID
+                        <i
+                            class="
+                                fas
+                                fa-sort
+                                fa-sort-numeric-down
+                                th-sort-as
+                            "
+                            id="column__0"
+                        ></i>
+                    </th>
+                    <th id="name">
+                        Name
+                        <i
+                            class="
+                                fas
+                                fa-sort
+                                fa-sort-alpha-down
+                            "
+                            id="column__1"
+                        >
+                        </i>
+                    </th>
+                    <th id="birthday">
+                        Birthday
+                        <i
+                            class="
+                                fas
+                                fa-sort
+                                fa-sort-numeric-down
+                            "
+                            id="column__2"
+                        ></i>
+                    </th>
+                    <th>Edit information</th>
+                    <th>
+                        <form id="row__deletion">
+                            <label for="">
+                                Select all  
+                                <input type="checkbox" name="" id="selector--selectAll">
+                            </label>
+                            <input type="submit" value="Delete selected">
+                        </form>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for birthday in birthdays %}
+                <tr id="{{'row--{}'.format(birthday.id) }}">
+                    <td class="id">{{ birthday.id }}</td>
+                    <td class="name">{{ birthday.name }}</td>
+                    <td class="birthday">{{ '{}/{}'.format(birthday.month, birthday.day)}}</td>
+                    <td>
+                        <button
+                            class="table__button--edit"
+                            id="{{'editButton--{}'.format(birthday.id) }}"
+                        >
+                            Edit entry
+                        </button>
+                    </td>
+                    <td>
+                        <input type="checkbox" form="row__deletion" name="ID" value="{{ birthday.id }}" class="row__selector" id = "{{'checkbox--{}'.format(birthday.id)}}">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
